@@ -1,0 +1,34 @@
+{
+  "name": "json-util",
+  "version": "0.0.1",
+  "stability": 1,
+  "license": "MIT",
+  "author": "Lauri Rooden <lauri@rooden.ee>",
+  "description": "JSON Pointer [RFC 6901] and JSON Merge Patch [RFC 7396] implementation",
+  "keywords": [
+    "json",
+    "pointer",
+    "rfc6901",
+    "merge",
+    "patch",
+    "rfc7396"
+  ],
+  "main": "index.js",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build": "node node_modules/buildman/index.js --all",
+    "travis-test": "istanbul cover ./tests/run.js && (coveralls < coverage/lcov.info || exit 0)",
+    "test": "node tests/run.js"
+  },
+  "repository": "git://github.com/litejs/json-util.git",
+  "bugs": {
+    "url": "https://github.com/litejs/json-util/issues"
+  },
+  "devDependencies": {
+    "buildman": "*",
+    "testman": "*"
+  },
+  "buildman": {
+    "dist/index-min.js": "index.js"
+  }
+}
