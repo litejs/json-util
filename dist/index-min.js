@@ -1,5 +1,5 @@
 /*
     MIT License
 */
-!function(k,h){function l(a,b,e,c,d,f,g){c||(c="");if(b&&b.constructor===h)for(d in a&&a.constructor===h||(a={},e&&e.push(c)),b)a[d]!==b[d]&&m.call(b,d)&&(f=b[d],g=c+"/"+d.replace(/~/g,"~0").replace(/\//g,"~1"),null==f?m.call(a,d)&&(delete a[d],e&&e.push(g)):a[d]=l(a[d],f,e,g));else a=b,e&&e.push(c);return a}var m=h.prototype.hasOwnProperty;k.pointer=function(a,b,e){if(b){b=b.split("/");for(var c,d=2<arguments.length,f=1,g=b.length;a&&f<g;)c=b[f++].replace(/~1/g,"/").replace(/~0/g,"~"),d&&(a[c]=f==
-g?e:a[c]&&"object"==typeof a[c]?a[c]:{}),a=a[c]}return a};k.mergePatch=l}(JSON,Object);
+!function(k,h){function l(a,b,g,d,c,e,f){d||(d="");if(b&&b.constructor===h)for(c in a&&a.constructor===h||(a={}),b)a[c]!==b[c]&&m.call(b,c)&&(e=b[c],f=d+"/"+c.replace(/~/g,"~0").replace(/\//g,"~1"),g&&g.push(f),null==e?delete a[c]:a[c]=l(a[c],e,g,f));else a=b;return a}var m=h.prototype.hasOwnProperty;k.pointer=function(a,b,g){if(b){b=b.split("/");for(var d,c=2<arguments.length,e=1,f=b.length;a&&e<f;)d=b[e++].replace(/~1/g,"/").replace(/~0/g,"~"),c&&(a[d]=e==f?g:a[d]&&"object"==typeof a[d]?a[d]:{}),
+a=a[d]}return a};k.mergePatch=l}(JSON,Object);

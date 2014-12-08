@@ -2,8 +2,8 @@
 
 
 /**
- * @version    0.0.1
- * @date       2014-12-05
+ * @version    0.0.2
+ * @date       2014-12-08
  * @stability  1 - Experimental
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -59,24 +59,20 @@
 		if (isObject(patch)) {
 			if (!isObject(target)) {
 				target = {}
-				if (changed) changed.push(_path)
 			}
 			for (_key in patch) if (target[_key] !== patch[_key] && hasOwn.call(patch, _key)) {
 				_val = patch[_key]
 				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
+				if (changed) changed.push(_nextPath)
 				//NOTE: null == undefined
 				if (_val == null) {
-					if (hasOwn.call(target, _key)) {
-						delete target[_key]
-						if (changed) changed.push(_nextPath)
-					}
+					delete target[_key]
 				} else {
 					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
 				}
 			}
 		} else {
 			target = patch
-			if (changed) changed.push(_path)
 		}
 		return target
 	}
