@@ -8,7 +8,7 @@
 [RFC 7396]: http://tools.ietf.org/html/rfc7396
 
 
-    @version    0.0.2
+    @version    0.0.3
     @date       2014-12-08
     @stability  1 - Experimental
 
@@ -31,7 +31,7 @@ JSON.pointer(obj, "/a/b", 2) // sets value to 2
 var changed = []
 JSON.mergePatch(obj, {"a": {"c": "C"}}, changed)
 // obj is now {"a": {"b": 2, "c": "C"}}
-// changed = ["/a/c"]
+// changed = ["/a", "/a/c"]
 ```
 
 

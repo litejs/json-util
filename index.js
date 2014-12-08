@@ -2,7 +2,7 @@
 
 
 /**
- * @version    0.0.2
+ * @version    0.0.3
  * @date       2014-12-08
  * @stability  1 - Experimental
  * @author     Lauri Rooden <lauri@rooden.ee>
@@ -53,7 +53,7 @@
 	 * @see http://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath) {
+	function mergePatch(target, patch, changed, _path, _key, _nextPath) {
 		if (!_path) _path = ""
 
 		if (isObject(patch)) {
@@ -61,14 +61,13 @@
 				target = {}
 			}
 			for (_key in patch) if (target[_key] !== patch[_key] && hasOwn.call(patch, _key)) {
-				_val = patch[_key]
 				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
 				if (changed) changed.push(_nextPath)
 				//NOTE: null == undefined
-				if (_val == null) {
+				if (patch[_key] == null) {
 					delete target[_key]
 				} else {
-					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
+					target[_key] = mergePatch(target[_key], patch[_key], changed, _nextPath)
 				}
 			}
 		} else {
