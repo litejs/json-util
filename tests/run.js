@@ -56,28 +56,6 @@ it("should resolve pointers").
 	equal(util.pointer(obj, "/ "     ), 7).
 	equal(util.pointer(obj, "/m~0n"  ), 8).
 
-it ("should work with old Object.deepMerge tests").
-	run(function(){
-		a = { a:"A"
-			, b:null
-			, c:"C"
-			, d:null
-			, e:{ea:"EA", eb:null, ec:"EC", ed:null}
-			, f:null
-			, g:{ga:1}
-		}
-		b = { b:"B"
-			, c:null
-			, e: {eb:"EB", ec:null}
-			, f: {fa:1}
-			, g: null
-		}
-		c = []
-		JSON.mergePatch(a, b, c)
-	}).
-	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
-	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
-	equal(JSON.stringify(c), '["/b","/c","/e","/e/eb","/e/ec","/f","/f/fa","/g"]').
 
 it("should set values by pointers").
 	equal(util.pointer(obj, "/"      , 1    ), 1).
@@ -109,6 +87,34 @@ it("should set values by pointers").
 describe ("JSON.mergePatch").
 it("should apply merge patches")
 
+for (var x = 0; x < tests.length;)
+	addTest(tests[x++], tests[x++], tests[x++])
+
+test.
+it ("should work with old Object.deepMerge tests").
+	run(function(){
+		a = { a:"A"
+			, b:null
+			, c:"C"
+			, d:null
+			, e:{ea:"EA", eb:null, ec:"EC", ed:null}
+			, f:null
+			, g:{ga:1}
+		}
+		b = { b:"B"
+			, c:null
+			, e: {eb:"EB", ec:null}
+			, f: {fa:1}
+			, g: null
+		}
+		c = []
+		JSON.mergePatch(a, b, c)
+	}).
+	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
+	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
+	equal(JSON.stringify(c), '["/b","/c","/e","/e/eb","/e/ec","/f","/f/fa","/g"]').
+done()
+
 
 function addTest(a, b, c) {
 	var target = JSON.stringify(a)
@@ -118,27 +124,4 @@ function addTest(a, b, c) {
 	test = test.equal(result, expected)
 }
 
-
-for (var x = 0; x < tests.length;)
-	addTest(tests[x++], tests[x++], tests[x++])
-
-
-test.done()
-
-function pointerTest() {
-	/*
-	#            // the whole document
-	#/foo        ["bar", "baz"]
-	#/foo/0      "bar"
-	#/           0
-	#/a~1b       1
-	#/c%25d      2
-	#/e%5Ef      3
-	#/g%7Ch      4
-	#/i%5Cj      5
-	#/k%22l      6
-	#/%20        7
-	#/m~0n       8
-	*/
-}
 
