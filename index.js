@@ -64,9 +64,9 @@
 				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
 				if (changed) changed.push(_nextPath)
 				//NOTE: null == undefined
-				if (patch[_key] == null) {
+				if (patch[_key] === null) {
 					delete target[_key]
-				} else {
+				} else if (patch[_key] != null) {
 					target[_key] = mergePatch(target[_key], patch[_key], changed, _nextPath)
 				}
 			}

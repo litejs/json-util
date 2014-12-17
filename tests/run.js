@@ -1,8 +1,8 @@
 
 require("..")
 
-var a,b,c
-var util = JSON
+var undef, a, b, c
+, util = JSON
 , obj =
 	{ "foo": ["bar", "baz"]
 	, "": 0
@@ -19,6 +19,8 @@ var util = JSON
 	[ {"a":"b"}         , {"a":"c"}                 , {"a":"c"}
 	, {"a":"b"}         , {"b":"c"}                 , {"a":"b","b":"c"}
 	, {"a":"b"}         , {"a":null}                , {}
+	, {"a":"b"}         , {"a":undef}               , {"a":"b"}
+	, {"a":"b"}         , {"b":undef}               , {"a":"b"}
 	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}
 	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}
 	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}
