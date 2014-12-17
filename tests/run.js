@@ -57,6 +57,20 @@ it("should resolve pointers").
 	equal(util.pointer(obj, "/ "     ), 7).
 	equal(util.pointer(obj, "/m~0n"  ), 8).
 
+it("should resolve pointers in a URI fragment", { _skip: "Commented out" }).
+	equal(util.pointer(obj, "#"       ), obj).
+	equal(util.pointer(obj, "#/foo"   ), obj.foo).
+	equal(util.pointer(obj, "#/foo/0" ), "bar").
+	equal(util.pointer(obj, "#/foo/1" ), "baz").
+	equal(util.pointer(obj, "#/"      ), 0).
+	equal(util.pointer(obj, "#/a~1b"  ), 1).
+	equal(util.pointer(obj, "#/c%25d" ), 2).
+	equal(util.pointer(obj, "#/e%5Ef" ), 3).
+	equal(util.pointer(obj, "#/g%7Ch" ), 4).
+	equal(util.pointer(obj, "#/i%5Cj" ), 5).
+	equal(util.pointer(obj, "#/k%22l" ), 6).
+	equal(util.pointer(obj, "#/%20"   ), 7).
+	equal(util.pointer(obj, "#/m~0n"  ), 8).
 
 it("should set values by pointers").
 	equal(util.pointer(obj, "/"      , 1    ), 1).

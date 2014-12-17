@@ -28,6 +28,9 @@
 
 	function pointer(obj, path, value) {
 		if (path) {
+			if (path.charAt(0) == "#") {
+				path = decodeURIComponent(path.slice(1).replace(/\+/g, " "))
+			}
 			path = path.split("/")
 			for (
 				var _key
