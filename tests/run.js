@@ -16,24 +16,25 @@ var undef, a, b, c
 	, "m~n": 8
 	}
 , tests =
-	[ {"a":"b"}         , {"a":"c"}                 , {"a":"c"}
-	, {"a":"b"}         , {"b":"c"}                 , {"a":"b","b":"c"}
-	, {"a":"b"}         , {"a":null}                , {}
-	, {"a":"b"}         , {"a":undef}               , {"a":"b"}
-	, {"a":"b"}         , {"b":undef}               , {"a":"b"}
-	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}
-	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}
-	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}
-	, {"a":{"b": "c"}}  , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}
-	, {"a":[{"b":"c"}]} , {"a":[1]}                 , {"a":[1]}
-	, ["a","b"]         , ["c","d"]                 , ["c","d"]
-	, {"a":"b"}         , ["c"]                     , ["c"]
-	, {"a":"foo"}       , null                      , null
-	, {"a":"foo"}       , "bar"                     , "bar"
-	, {"e":null}        , {"a":1}                   , {"e":null,"a":1}
-	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}
-	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}
-	, {}                , obj                       , obj
+	[ {"a":"b"}         , {"a":"c"}                 , {"a":"c"}          , ["/a"]
+	, {"a":"b"}         , {"b":"c"}                 , {"a":"b","b":"c"}  , ["/b"]
+	, {"a":"b"}         , {"a":null}                , {}                 , ["/a"]
+	, {"a":"b"}         , {"a":undef}               , {"a":"b"}          , []
+	, {"a":"b"}         , {"b":undef}               , {"a":"b"}          , []
+	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}          , ["/a"]
+	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}          , ["/a"]
+	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}        , ["/a"]
+	, {"a":{"b": "c"}}  , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}    , ["/a", "/a/b"]
+	, {"a":[{"b":"c"}]} , {"a":[1]}                 , {"a":[1]}          , ["/a"]
+	, ["a","b"]         , ["c","d"]                 , ["c","d"]          , []
+	, {"a":"b"}         , ["c"]                     , ["c"]              , []
+	, {"a":"foo"}       , null                      , null               , []
+	, {"a":"foo"}       , "bar"                     , "bar"              , []
+	, {"e":null}        , {"a":1}                   , {"e":null,"a":1}   , ["/a"]
+	, {"e":null}        , {"e":null}                , {}                 , ["/e"]
+	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}          , ["/a"]
+	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}    , ["/a", "/a/bb"]
+	, {}                , obj                       , obj                , ["/foo", "/","/a~1b","/c%d","/e^f","/g|h","/i\\j","/k\"l","/ ","/m~0n","/a","/a/b","/a/b/c"]
 	]
 
 
@@ -88,7 +89,7 @@ describe ("JSON.mergePatch").
 it("should apply merge patches")
 
 for (var x = 0; x < tests.length;)
-	addTest(tests[x++], tests[x++], tests[x++])
+	addTest(tests[x++], tests[x++], tests[x++], tests[x++])
 
 test.
 it ("should work with old Object.deepMerge tests").
@@ -116,12 +117,14 @@ it ("should work with old Object.deepMerge tests").
 done()
 
 
-function addTest(a, b, c) {
+function addTest(a, b, c, d) {
 	var target = JSON.stringify(a)
 	, changes = []
 	, result = JSON.stringify(util.mergePatch(a, b, changes))
 	, expected = JSON.stringify(c)
 	test = test.equal(result, expected)
+	test = test.equal(changes.length, d.length)
+	test = test.equal(JSON.stringify(changes), JSON.stringify(d))
 }
 
 

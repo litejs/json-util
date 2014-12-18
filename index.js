@@ -2,8 +2,8 @@
 
 
 /**
- * @version    0.0.4
- * @date       2014-12-17
+ * @version    0.0.5
+ * @date       2014-12-18
  * @stability  1 - Experimental
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -53,21 +53,26 @@
 	 * @see http://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, _path, _key, _nextPath) {
+	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef) {
 		if (!_path) _path = ""
 
 		if (isObject(patch)) {
 			if (!isObject(target)) {
 				target = {}
 			}
-			for (_key in patch) if (target[_key] !== patch[_key] && hasOwn.call(patch, _key)) {
+			for (_key in patch) if (
+				_undef !== (_val = patch[_key]) &&
+				hasOwn.call(patch, _key) &&
+				(
+					_undef == _val ?
+					_undef !== target[_key] && delete target[_key] :
+					target[_key] !== _val
+				)
+			) {
 				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
 				if (changed) changed.push(_nextPath)
-				//NOTE: null == undefined
-				if (patch[_key] === null) {
-					delete target[_key]
-				} else if (patch[_key] != null) {
-					target[_key] = mergePatch(target[_key], patch[_key], changed, _nextPath)
+				if (_undef != _val) {
+					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
 				}
 			}
 		} else {
