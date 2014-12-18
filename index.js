@@ -38,9 +38,12 @@
 				; ) {
 				_key = path[i++].replace(/~1/g, "/").replace(/~0/g, "~")
 				if (_set) {
-					obj[_key] = i == len ?
-					value :
-					obj[_key] && typeof obj[_key] == "object" ? obj[_key] : {}
+					if (i == len) {
+						_set = obj[_key]
+						obj[_key] = value
+						return _set
+					}
+					if (!obj[_key] || typeof obj[_key] != "object") obj[_key] = {}
 				}
 				obj = obj[_key]
 			}

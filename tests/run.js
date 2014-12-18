@@ -58,31 +58,31 @@ it("should resolve pointers").
 	equal(util.pointer(obj, "/m~0n"  ), 8).
 
 
-it("should set values by pointers").
-	equal(util.pointer(obj, "/"      , 1), 1).
+it("should set values by pointers and return old values").
+	equal(util.pointer(obj, "/"      , 1), 0).
 	equal(util.pointer(obj, "/"         ), 1).
-	equal(util.pointer(obj, "/a~1b"  , 2), 2).
+	equal(util.pointer(obj, "/a~1b"  , 2), 1).
 	equal(util.pointer(obj, "/a~1b"     ), 2).
-	equal(util.pointer(obj, "/c%d"   , 3), 3).
+	equal(util.pointer(obj, "/c%d"   , 3), 2).
 	equal(util.pointer(obj, "/c%d"      ), 3).
-	equal(util.pointer(obj, "/e^f"   , 4), 4).
+	equal(util.pointer(obj, "/e^f"   , 4), 3).
 	equal(util.pointer(obj, "/e^f"      ), 4).
-	equal(util.pointer(obj, "/g|h"   , 5), 5).
+	equal(util.pointer(obj, "/g|h"   , 5), 4).
 	equal(util.pointer(obj, "/g|h"      ), 5).
-	equal(util.pointer(obj, "/i\\j"  , 6), 6).
+	equal(util.pointer(obj, "/i\\j"  , 6), 5).
 	equal(util.pointer(obj, "/i\\j"     ), 6).
-	equal(util.pointer(obj, "/k\"l"  , 7), 7).
+	equal(util.pointer(obj, "/k\"l"  , 7), 6).
 	equal(util.pointer(obj, "/k\"l"     ), 7).
-	equal(util.pointer(obj, "/ "     , 8), 8).
+	equal(util.pointer(obj, "/ "     , 8), 7).
 	equal(util.pointer(obj, "/ "        ), 8).
-	equal(util.pointer(obj, "/m~0n"  , 9), 9).
+	equal(util.pointer(obj, "/m~0n"  , 9), 8).
 	equal(util.pointer(obj, "/m~0n"     ), 9).
-	equal(util.pointer(obj, "/foo/0" , 1), 1).
+	equal(util.pointer(obj, "/foo/0" , 1), "bar").
 	equal(util.pointer(obj, "/foo/0"    ), 1).
 	equal(util.pointer(obj, "/foo/1"    ), "baz").
-	equal(util.pointer(obj, "/foo"   , 2), 2).
+	equal(JSON.stringify(util.pointer(obj, "/foo"   , 2)), JSON.stringify([1, "baz"])).
 	equal(util.pointer(obj, "/foo"      ), 2).
-	equal(util.pointer(obj, "/a/b/c" , 3), 3).
+	equal(util.pointer(obj, "/a/b/c" , 3), undef).
 	equal(util.pointer(obj, "/a/b/c"    ), 3).
 
 describe ("JSON.mergePatch").
@@ -109,7 +109,7 @@ it ("should work with old Object.deepMerge tests").
 			, g: null
 		}
 		c = []
-		JSON.mergePatch(a, b, c)
+		util.mergePatch(a, b, c)
 	}).
 	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
 	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
