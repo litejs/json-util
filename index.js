@@ -39,8 +39,8 @@
 				_key = path[i++].replace(/~1/g, "/").replace(/~0/g, "~")
 				if (_set) {
 					obj[_key] = i == len ?
-						value :
-						obj[_key] && typeof obj[_key] == "object" ? obj[_key] : {}
+					value :
+					obj[_key] && typeof obj[_key] == "object" ? obj[_key] : {}
 				}
 				obj = obj[_key]
 			}
