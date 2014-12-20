@@ -34,7 +34,7 @@ var undef, a, b, c
 	, {"e":null}        , {"e":null}                , {}                , ["/e"]
 	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}         , ["/a"]
 	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}   , ["/a", "/a/bb"]
-	, {}                , obj                       , obj               , ["/foo", "/", "/a~1b", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n", "/a", "/a/b", "/a/b/c"]
+	, {}                , obj                       , obj               , ["/foo", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n", "/a", "/a/b", "/a/b/c"]
 	]
 
 
@@ -84,6 +84,12 @@ it("should set values by pointers and return old values").
 	equal(util.pointer(obj, "/foo"      ), 2).
 	equal(util.pointer(obj, "/a/b/c" , 3), undef).
 	equal(util.pointer(obj, "/a/b/c"    ), 3).
+
+it("should remove values by pointer").
+	equal(util.pointer(obj, "/"      , undef), 1).
+	equal(util.pointer(obj, "/"             ), undef).
+	equal(util.pointer(obj, "/a~1b"  , undef), 2).
+	equal(util.pointer(obj, "/a~1b"         ), undef).
 
 describe ("JSON.mergePatch").
 it("should apply merge patches")

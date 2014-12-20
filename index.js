@@ -3,7 +3,7 @@
 
 /**
  * @version    0.0.5
- * @date       2014-12-18
+ * @date       2014-12-20
  * @stability  1 - Experimental
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -12,7 +12,8 @@
 
 
 !function(exports, Object) {
-	var hasOwn = Object.prototype.hasOwnProperty
+	var _undef
+	, hasOwn = Object.prototype.hasOwnProperty
 
 	exports.pointer = pointer
 	exports.mergePatch = mergePatch
@@ -41,6 +42,7 @@
 					if (i == len) {
 						_set = obj[_key]
 						obj[_key] = value
+						if (value === _undef) delete obj[_key]
 						return _set
 					}
 					if (!obj[_key] || typeof obj[_key] != "object") obj[_key] = {}
@@ -56,7 +58,7 @@
 	 * @see http://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef) {
+	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath) {
 		if (!_path) _path = ""
 
 		if (isObject(patch)) {
