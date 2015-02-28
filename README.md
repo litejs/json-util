@@ -8,9 +8,9 @@
 [RFC 7396]: http://tools.ietf.org/html/rfc7396
 
 
-    @version    0.0.6
-    @date       2015-01-14
-    @stability  1 - Experimental
+    @version    1.0.0
+    @date       2015-02-27
+    @stability  3 - Stable
 
 
 JSON util &ndash; [![Build][1]][2] [![Coverage][3]][4]

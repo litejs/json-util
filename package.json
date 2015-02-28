@@ -1,9 +1,9 @@
 {
   "name": "json-util",
-  "version": "0.0.6",
-  "stability": 1,
-  "license": "MIT",
+  "version": "1.0.0",
+  "stability": 3,
   "author": "Lauri Rooden <lauri@rooden.ee>",
+  "license": "MIT",
   "description": "JSON Pointer [RFC 6901] and JSON Merge Patch [RFC 7396] implementation",
   "keywords": [
     "json",
@@ -15,6 +15,9 @@
   ],
   "main": "index.js",
   "readmeFilename": "README.md",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "build": "node node_modules/buildman/index.js --all",
     "travis-test": "istanbul cover ./tests/run.js && (coveralls < coverage/lcov.info || exit 0)",
@@ -29,6 +32,9 @@
     "testman": "*"
   },
   "buildman": {
-    "dist/index-min.js": "index.js"
+    "dist/index-min.js": {
+      "banner": "/*! litejs.com/MIT-LICENSE.txt */",
+      "input": "index.js"
+    }
   }
 }
