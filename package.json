@@ -1,6 +1,6 @@
 {
   "name": "json-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "stability": 3,
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "main": "index.js",
   "readmeFilename": "README.md",
   "files": [
+    "dist",
     "index.js"
   ],
   "scripts": {
