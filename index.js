@@ -18,7 +18,7 @@
 	exports.mergePatch = mergePatch
 
 	function isObject(obj) {
-		return obj && obj.constructor === Object
+		return obj && obj.constructor == Object
 	}
 
 	/**
@@ -39,6 +39,7 @@
 				_key = path[i++].replace(/~1/g, "/").replace(/~0/g, "~")
 				if (_set) {
 					if (i == len) {
+						// Reuse _set to keep existing value
 						_set = obj[_key]
 						obj[_key] = value
 						return _set
