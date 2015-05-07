@@ -24,7 +24,8 @@ var undef, a, b, c
 	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}         , ["/a"]
 	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}         , ["/a"]
 	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}       , ["/a"]
-	, {"a":{"b": "c"}}  , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}   , ["/a", "/a/b"]
+	, {"a":{"b": "c"}}  , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}   , ["/a/b", "/a"]
+	, {"a":{"b": "c"}}  , {"a":{"b":"c"}}           , {"a":{"b":"c"}}   , []
 	, {"a":[{"b":"c"}]} , {"a":[1]}                 , {"a":[1]}         , ["/a"]
 	, ["a","b"]         , ["c","d"]                 , ["c","d"]         , []
 	, {"a":"b"}         , ["c"]                     , ["c"]             , []
@@ -33,8 +34,8 @@ var undef, a, b, c
 	, {"e":null}        , {"a":1}                   , {"e":null,"a":1}  , ["/a"]
 	, {"e":null}        , {"e":null}                , {}                , ["/e"]
 	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}         , ["/a"]
-	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}   , ["/a", "/a/bb"]
-	, {}                , obj                       , obj               , ["/foo", "/", "/a~1b", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n", "/a", "/a/b", "/a/b/c"]
+	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}   , ["/a/bb", "/a"]
+	, {}                , obj                       , obj               , ["/foo", "/", "/a~1b", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n", "/a/b/c", "/a/b", "/a"]
 	]
 
 
@@ -113,7 +114,7 @@ it ("should work with old Object.deepMerge tests").
 	}).
 	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
 	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
-	equal(JSON.stringify(c), '["/b","/c","/e","/e/eb","/e/ec","/f","/f/fa","/g"]').
+	equal(JSON.stringify(c), '["/b","/c","/e/eb","/e/ec","/e","/f/fa","/f","/g"]').
 done()
 
 

@@ -56,7 +56,7 @@
 	 * @see http://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef) {
+	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef, _len) {
 		if (!_path) _path = ""
 
 		if (isObject(patch)) {
@@ -73,10 +73,11 @@
 				)
 			) {
 				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
-				if (changed) changed.push(_nextPath)
+				_len = changed && isObject(target[_key]) && changed.length
 				if (_undef != _val) {
 					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
 				}
+				if (_len === false || _len != changed.length) changed.push(_nextPath)
 			}
 		} else {
 			target = patch
