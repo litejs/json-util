@@ -18,7 +18,7 @@
 	exports.mergePatch = mergePatch
 
 	function isObject(obj) {
-		return obj && obj.constructor == Object
+		return !!obj && obj.constructor == Object
 	}
 
 	/**
