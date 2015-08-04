@@ -6,6 +6,7 @@ before_script:
   - npm install istanbul coveralls
 script:
   - istanbul cover ./tests/index.js
+  - istanbul check-coverage --statement -100 --branch -100 --function 100 --lines 100
 after_success:
   - coveralls < coverage/lcov.info
 
