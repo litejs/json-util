@@ -58,9 +58,10 @@
 	 */
 
 	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef, _len) {
-		if (!_path) _path = ""
-
 		if (isObject(patch)) {
+			if (!_path) {
+				_path = ""
+			}
 			if (!isObject(target)) {
 				target = {}
 			}
