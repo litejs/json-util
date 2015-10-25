@@ -17,10 +17,6 @@
 	exports.pointer = pointer
 	exports.mergePatch = mergePatch
 
-	function isObject(obj) {
-		return !!obj && obj.constructor == Object
-	}
-
 	/**
 	 * JSON Pointer
 	 * @see http://tools.ietf.org/html/rfc6901
@@ -44,7 +40,9 @@
 						obj[_key] = value
 						return _set
 					}
-					if (!obj[_key] || typeof obj[_key] != "object") obj[_key] = {}
+					if (!obj[_key] || typeof obj[_key] != "object") {
+						obj[_key] = {}
+					}
 				}
 				obj = obj[_key]
 			}
@@ -79,12 +77,18 @@
 				if (_undef != _val) {
 					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
 				}
-				if (_len === false || _len != changed.length) changed.push(_nextPath)
+				if (_len === false || _len != changed.length) {
+					changed.push(_nextPath)
+				}
 			}
 		} else {
 			target = patch
 		}
 		return target
+	}
+
+	function isObject(obj) {
+		return !!obj && obj.constructor == Object
 	}
 
 }(JSON, Object)
