@@ -14,6 +14,7 @@
 !function(exports, Object) {
 	var hasOwn = Object.prototype.hasOwnProperty
 
+	exports.clone = clone
 	exports.pointer = pointer
 	exports.mergePatch = mergePatch
 
@@ -85,6 +86,17 @@
 			target = patch
 		}
 		return target
+	}
+
+	function clone(source, temp, key) {
+		if (isObject(source)) {
+			temp = {}
+			for (key in source) if (hasOwn.call(source, key)) {
+				temp[key] = clone(source[key])
+			}
+			source = temp
+		}
+		return source
 	}
 
 	function isObject(obj) {
