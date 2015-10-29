@@ -103,6 +103,7 @@
 		return !!obj && obj.constructor == Object
 	}
 
-}(JSON, Object)
+// `this` refers to the `window` in browser and to the `exports` in Node.js.
+}(this.JSON || this, Object)
 
 

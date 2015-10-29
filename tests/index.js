@@ -1,8 +1,8 @@
 
-require("..")
+
 
 var undef, a, b, c
-, util = JSON
+, util = require("..")
 , obj =
 	{ "foo": ["bar", "baz"]
 	, "": 0
