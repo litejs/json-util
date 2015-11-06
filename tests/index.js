@@ -126,6 +126,16 @@ it ("should work with old Object.deepMerge tests").
 	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
 	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
 	equal(JSON.stringify(c), '["/b","/c","/e/eb","/e/ec","/e","/f/fa","/f","/g"]').
+
+describe ("util.clone").
+test("it clones objects", function(assert) {
+	Object.prototype.dummy = 123
+	var clone = util.clone(obj)
+	assert.deepEqual(obj, clone)
+	assert.notStrictEqual(obj, clone)
+
+	delete Object.prototype.dummy
+}).
 done()
 
 
