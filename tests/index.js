@@ -100,8 +100,8 @@ it("should set values by pointers and return old values").
 describe ("JSON.mergePatch").
 it("should apply merge patches")
 
-for (var x = 0; x < tests.length;)
-	addTest(tests[x++], tests[x++], tests[x++], tests[x++])
+for (var x = 0; x < tests.length; )
+	addTest("mergePatch", tests[x++], tests[x++], tests[x++], tests[x++])
 
 test.
 it ("should work with old Object.deepMerge tests").
@@ -129,14 +129,10 @@ it ("should work with old Object.deepMerge tests").
 done()
 
 
-function addTest(a, b, c, d) {
-	var target = JSON.stringify(a)
-	, changes = []
-	, result = JSON.stringify(util.mergePatch(a, b, changes))
-	, expected = JSON.stringify(c)
-	test = test.equal(result, expected)
-	test = test.equal(changes.length, d.length)
-	test = test.equal(JSON.stringify(changes), JSON.stringify(d))
+function addTest(method, a, b, c, d) {
+	var changes = []
+	test = test.deepEqual(util[method](util.clone(a), b, changes), c)
+	test = test.deepEqual(changes, d)
 }
 
 
