@@ -92,7 +92,7 @@ it("should set values by pointers and return old values").
 	equal(util.pointer(obj, "/foo/0" , 1), "bar").
 	equal(util.pointer(obj, "/foo/0"    ), 1).
 	equal(util.pointer(obj, "/foo/1"    ), "baz").
-	equal(JSON.stringify(util.pointer(obj, "/foo"   , 2)), JSON.stringify([1, "baz"])).
+	deepEqual(util.pointer(obj, "/foo", 2), [1, "baz"]).
 	equal(util.pointer(obj, "/foo"      ), 2).
 	equal(util.pointer(obj, "/a/b/c" , 3), undef).
 	equal(util.pointer(obj, "/a/b/c"    ), 3).
@@ -123,9 +123,9 @@ it ("should work with old Object.deepMerge tests").
 		c = []
 		util.mergePatch(a, b, c)
 	}).
-	equal(JSON.stringify(a), '{"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}').
-	equal(JSON.stringify(b), '{"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}').
-	equal(JSON.stringify(c), '["/b","/c","/e/eb","/e/ec","/e","/f/fa","/f","/g"]').
+	deepEqual(a, {"a":"A","b":"B","d":null,"e":{"ea":"EA","eb":"EB","ed":null},"f":{"fa":1}}).
+	deepEqual(b, {"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}).
+	deepEqual(c, ["/b","/c","/e/eb","/e/ec","/e","/f/fa","/f","/g"]).
 
 describe ("util.clone").
 test("it clones objects", function(assert) {
