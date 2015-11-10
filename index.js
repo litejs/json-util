@@ -95,6 +95,8 @@
 				temp[key] = clone(source[key])
 			}
 			source = temp
+		} else if (Array.isArray(source)) {
+			source = source.map(clone)
 		}
 		return source
 	}
