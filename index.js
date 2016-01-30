@@ -20,7 +20,7 @@
 
 	/**
 	 * JSON Pointer
-	 * @see http://tools.ietf.org/html/rfc6901
+	 * @see https://tools.ietf.org/html/rfc6901
 	 */
 
 	function pointer(obj, path, value) {
@@ -53,7 +53,7 @@
 
 	/**
 	 * JSON Merge Patch
-	 * @see http://tools.ietf.org/html/rfc7396
+	 * @see https://tools.ietf.org/html/rfc7396
 	 */
 
 	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef, _len) {

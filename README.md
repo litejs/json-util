@@ -19,29 +19,36 @@ JSON util &ndash; [![Build][1]][2] [![Coverage][3]][4]
 JSON Pointer [RFC 6901][] and JSON Merge Patch [RFC 7396][] implementation.
 The main goal is to have a small and reasonably fast code.
 
+When used directly with script tag,
+methods are added to global JSON object.
+
+When used with `require`,
+methods are exported as expected.
+
 
 Examples
 --------
 
 ```javascript
-var obj = {"a": {"b": 1}}
+var util = require("json-util")
+, obj = {"a": {"b": 1}}
 
 // get a value
-var b = JSON.pointer(obj, "/a/b")
+var b = util.pointer(obj, "/a/b")
 // b is 1
 
 // set a value
-var oldValue = JSON.pointer(obj, "/a/b", 2) // sets value to 2
+var oldValue = util.pointer(obj, "/a/b", 2) // sets value to 2
 // oldValue is 1
 
 // adding to a nonexistent target will create missing object literals
-JSON.pointer(obj, "/a/c/d/e", "3")
+util.pointer(obj, "/a/c/d/e", "3")
 // obj is now {"a": {"b": 2, "c": {"d": {"e": "3"}}}}
 
 
 // apply a patch and collect JSON Pointers to array that were changed
 var changed = []
-JSON.mergePatch(obj, {"a": {"c": "C"}}, changed /* optional */)
+util.mergePatch(obj, {"a": {"c": "C"}}, changed /* optional */)
 // obj is now {"a": {"b": 2, "c": "C"}}
 // changed = ["/a", "/a/c"]
 ```
@@ -71,7 +78,7 @@ External links
 
 ### Licence
 
-Copyright (c) 2014-2015 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+Copyright (c) 2014-2016 Lauri Rooden &lt;lauri@rooden.ee&gt;  
 [The MIT License](http://lauri.rooden.ee/mit-license.txt)
 
 
