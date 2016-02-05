@@ -134,7 +134,7 @@ test("it clones objects", function(assert) {
 	assert.deepEqual(obj, clone)
 	assert.notStrictEqual(obj, clone)
 
-	var arr = [1, "2", obj]
+	var arr = [1, "2", new Date, {a:3}]
 	, arrClone = util.clone(arr)
 	assert.deepEqual(arr, arrClone)
 	assert.notStrictEqual(arr, arrClone)

@@ -90,7 +90,8 @@
 
 	function clone(source, temp, key) {
 		if (source && typeof source == "object") {
-			temp = source.constructor()
+			// new Date().constructor() returns a string
+			temp = source instanceof Date ? new Date : source.constructor()
 			for (key in source) if (hasOwn.call(source, key)) {
 				temp[key] = clone(source[key])
 			}
