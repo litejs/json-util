@@ -89,14 +89,12 @@
 	}
 
 	function clone(source, temp, key) {
-		if (isObject(source)) {
-			temp = {}
+		if (source && typeof source == "object") {
+			temp = source.constructor()
 			for (key in source) if (hasOwn.call(source, key)) {
 				temp[key] = clone(source[key])
 			}
 			source = temp
-		} else if (Array.isArray(source)) {
-			source = source.map(clone)
 		}
 		return source
 	}
