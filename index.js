@@ -91,7 +91,9 @@
 	function clone(source, temp, key) {
 		if (source && typeof source == "object") {
 			// new Date().constructor() returns a string
-			temp = source instanceof Date ? new Date : source.constructor()
+			temp = source instanceof Date ? new Date :
+				source instanceof RegExp ? new RegExp(source.source, (source.ignoreCase ? "i" : "") + (source.global ? "g" : "") + (source.multiline ? "m" : "")) :
+				source.constructor()
 			for (key in source) if (hasOwn.call(source, key)) {
 				temp[key] = clone(source[key])
 			}

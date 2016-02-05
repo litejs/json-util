@@ -130,14 +130,24 @@ it ("should work with old Object.deepMerge tests").
 describe ("util.clone").
 test("it clones objects", function(assert) {
 	Object.prototype.dummy = 123
-	var clone = util.clone(obj)
-	assert.deepEqual(obj, clone)
-	assert.notStrictEqual(obj, clone)
-
-	var arr = [1, "2", new Date, {a:3}]
+	var date = new Date
+	, dateClone = util.clone(date)
+	, map = {a:3}
+	, mapClone = util.clone(map)
+	, re = /ab/g
+	, reClone = util.clone(re)
+	, arr = [1, "2", date, map, re]
 	, arrClone = util.clone(arr)
-	assert.deepEqual(arr, arrClone)
+
 	assert.notStrictEqual(arr, arrClone)
+	assert.notStrictEqual(date, dateClone)
+	assert.notStrictEqual(map, mapClone)
+	assert.notStrictEqual(re, reClone)
+
+	assert.deepEqual(arr, arrClone)
+	assert.deepEqual(date, dateClone)
+	assert.deepEqual(map, mapClone)
+	assert.deepEqual(re, reClone)
 
 	delete Object.prototype.dummy
 }).
