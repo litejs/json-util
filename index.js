@@ -88,18 +88,18 @@
 		return target
 	}
 
-	function clone(source, temp, key) {
-		if (source && typeof source == "object") {
+	function clone(obj, temp, key) {
+		if (obj && typeof obj == "object") {
 			// new Date().constructor() returns a string
-			temp = source instanceof Date ? new Date :
-				source instanceof RegExp ? new RegExp(source.source, (source.ignoreCase ? "i" : "") + (source.global ? "g" : "") + (source.multiline ? "m" : "")) :
-				source.constructor()
-			for (key in source) if (hasOwn.call(source, key)) {
-				temp[key] = clone(source[key])
+			temp = obj instanceof Date ? new Date :
+				obj instanceof RegExp ? new RegExp(obj.source, (obj.ignoreCase ? "i" : "") + (obj.global ? "g" : "") + (obj.multiline ? "m" : "")) :
+				obj.constructor()
+			for (key in obj) if (hasOwn.call(obj, key)) {
+				temp[key] = clone(obj[key])
 			}
-			source = temp
+			obj = temp
 		}
-		return source
+		return obj
 	}
 
 	function isObject(obj) {
