@@ -78,7 +78,7 @@
 				if (_undef != _val) {
 					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
 				}
-				if (_len === false || _len != changed.length) {
+				if (_len === false || changed && _len != changed.length) {
 					changed.push(_nextPath)
 				}
 			}

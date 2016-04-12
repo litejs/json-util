@@ -158,6 +158,7 @@ function addTest(method, a, b, c, d) {
 	var changes = []
 	test = test.deepEqual(util[method](util.clone(a), b, changes), c)
 	test = test.deepEqual(changes, d)
+	test = test.deepEqual(util[method](util.clone(a), b), c)
 }
 
 
