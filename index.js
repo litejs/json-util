@@ -13,6 +13,7 @@
 
 !function(exports, Object) {
 	var hasOwn = Object.prototype.hasOwnProperty
+	, pointerCache = {}
 
 	exports.clone = clone
 	exports.pointer = pointer
@@ -23,9 +24,18 @@
 	 * @see https://tools.ietf.org/html/rfc6901
 	 */
 
+	function pointerSplit(path) {
+		var arr = pointerCache[path] = path.split("/")
+		, len = arr.length
+		for (; --len; ) {
+			arr[len] = arr[len].replace(/~1/g, "/").replace(/~0/g, "~")
+		}
+		return arr
+	}
+
 	function pointer(obj, path, value) {
 		if (path) {
-			path = path.split("/")
+			path = pointerCache[path] || pointerSplit(path)
 			for (
 				var _key
 				, _set = arguments.length > 2
@@ -33,7 +43,7 @@
 				, len = path.length
 				; obj && i < len
 				; ) {
-				_key = path[i++].replace(/~1/g, "/").replace(/~0/g, "~")
+				_key = path[i++]
 				if (_set) {
 					if (i == len) {
 						// Reuse _set to keep existing value
