@@ -2,6 +2,7 @@
 
 
 var undef, a, b, c
+, date = new Date()
 , util = require("..")
 , obj =
 	{ "foo": ["bar", "baz"]
@@ -130,8 +131,7 @@ it ("should work with old Object.deepMerge tests").
 describe ("util.clone").
 test("it clones objects", function(assert) {
 	Object.prototype.dummy = 123
-	var date = new Date
-	, dateClone = util.clone(date)
+	var dateClone = util.clone(date)
 	, map = {a:3}
 	, mapClone = util.clone(map)
 	, re = /ab/g
