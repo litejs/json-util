@@ -12,8 +12,8 @@
 
 
 !function(exports, Object) {
-	var hasOwn = Object.prototype.hasOwnProperty
-	, pointerCache = {}
+	var pointerCache = {}
+	, hasOwn = pointerCache.hasOwnProperty
 
 	exports.clone = clone
 	exports.merge = merge
@@ -33,9 +33,6 @@
 		}
 		return arr
 	}
-
-
-
 
 	function pointer(_obj, _path, value) {
 		var obj = _obj
