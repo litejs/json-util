@@ -8,8 +8,8 @@
 [RFC 7396]: http://tools.ietf.org/html/rfc7396
 
 
-    @version    2.1.0
-    @date       2016-07-12
+    @version    2.1.1
+    @date       2016-07-14
     @stability  3 - Stable
 
 
