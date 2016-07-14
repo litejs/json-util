@@ -131,6 +131,16 @@ it ("merges objects").
 equal(util.merge({a: 1}, {b: 2}), {a: 1, b: 2}).
 equal(util.merge({a: 1}, Object.create({b: 2}), {c: 3}), {a: 1, c: 3}).
 
+it ("has isObject").
+equal(util.isObject({}), true).
+equal(util.isObject(), false).
+equal(util.isObject(null), false).
+equal(util.isObject(""), false).
+equal(util.isObject("a"), false).
+equal(util.isObject(0), false).
+equal(util.isObject(1), false).
+equal(util.isObject([]), false).
+
 describe ("util.clone").
 test("it clones objects", function(assert) {
 	Object.prototype.dummy = 123
@@ -176,6 +186,8 @@ isOptimized(util.pointer, [{}, "/a/b/c"]).
 isOptimized(util.mergePatch, [{a:1}, {b:2}]).
 isOptimized(util.clone, [{a:1}]).
 isOptimized(util.merge, [{a:1}, {b:2}]).
+isOptimized(util.isObject, [{a:1}]).
+isOptimized(util.isObject, ["a"]).
 done()
 
 

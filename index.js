@@ -19,6 +19,7 @@
 	exports.merge = merge
 	exports.pointer = pointer
 	exports.mergePatch = mergePatch
+	exports.isObject = isObject
 
 	/**
 	 * JSON Pointer

@@ -45,12 +45,15 @@ var oldValue = util.pointer(obj, "/a/b", 2) // sets value to 2
 util.pointer(obj, "/a/c/d/e", "3")
 // obj is now {"a": {"b": 2, "c": {"d": {"e": "3"}}}}
 
-
 // apply a patch and collect JSON Pointers to array that were changed
 var changed = []
 util.mergePatch(obj, {"a": {"c": "C"}}, changed /* optional */)
 // obj is now {"a": {"b": 2, "c": "C"}}
 // changed = ["/a", "/a/c"]
+
+// test is it a object literal
+json.isObject(obj)
+// true
 ```
 
 
