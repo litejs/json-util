@@ -1,6 +1,5 @@
 
 
-
 var undef, a, b, c
 , date = new Date()
 , util = require("..")
@@ -128,6 +127,10 @@ it ("should work with old Object.deepMerge tests").
 	deepEqual(b, {"b":"B","c":null,"e":{"eb":"EB","ec":null},"f":{"fa":1},"g":null}).
 	deepEqual(c, ["/b","/c","/e/eb","/e/ec","/e","/f/fa","/f","/g"]).
 
+it ("merges objects").
+equal(util.merge({a: 1}, {b: 2}), {a: 1, b: 2}).
+equal(util.merge({a: 1}, Object.create({b: 2}), {c: 3}), {a: 1, c: 3}).
+
 describe ("util.clone").
 test("it clones objects", function(assert) {
 	Object.prototype.dummy = 123
@@ -156,6 +159,7 @@ it("should be V8 friendly").
 isOptimized(util.pointer, [{}, "/a/b/c"]).
 isOptimized(util.mergePatch, [{a:1}, {b:2}]).
 isOptimized(util.clone, [{a:1}]).
+isOptimized(util.merge, [{a:1}, {b:2}]).
 done()
 
 

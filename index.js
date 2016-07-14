@@ -16,6 +16,7 @@
 	, pointerCache = {}
 
 	exports.clone = clone
+	exports.merge = merge
 	exports.pointer = pointer
 	exports.mergePatch = mergePatch
 
@@ -32,6 +33,9 @@
 		}
 		return arr
 	}
+
+
+
 
 	function pointer(_obj, _path, value) {
 		var obj = _obj
@@ -96,6 +100,16 @@
 			}
 		} else {
 			target = patch
+		}
+		return target
+	}
+
+	function merge(_target) {
+		for (var key, source, target = _target, a = arguments, len = a.length, i = 1; i < len; ) {
+			source = a[i++]
+			for (key in source) if (hasOwn.call(source, key)) {
+				target[key] = source[key]
+			}
 		}
 		return target
 	}
