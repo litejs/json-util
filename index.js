@@ -33,29 +33,30 @@
 		return arr
 	}
 
-	function pointer(obj, path, value) {
-		if (path) {
-			path = pointerCache[path] || pointerSplit(path)
+	function pointer(_obj, _path, value) {
+		var obj = _obj
+		if (_path) {
 			for (
-				var _key
+				var key
+				, path = pointerCache[_path] || pointerSplit(_path)
 				, _set = arguments.length > 2
 				, i = 1
 				, len = path.length
 				; obj && i < len
 				; ) {
-				_key = path[i++]
+				key = path[i++]
 				if (_set) {
 					if (i == len) {
 						// Reuse _set to keep existing value
-						_set = obj[_key]
-						obj[_key] = value
+						_set = obj[key]
+						obj[key] = value
 						return _set
 					}
-					if (!obj[_key] || typeof obj[_key] != "object") {
-						obj[_key] = {}
+					if (!obj[key] || typeof obj[key] != "object") {
+						obj[key] = {}
 					}
 				}
-				obj = obj[_key]
+				obj = obj[key]
 			}
 		}
 		return obj
@@ -66,30 +67,31 @@
 	 * @see https://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, _path, _key, _val, _nextPath, _undef, _len) {
+	function mergePatch(target, patch, changed, pointer) {
+		var undef, key, val, len, nextPointer
 		if (isObject(patch)) {
-			if (!_path) {
-				_path = ""
+			if (!pointer) {
+				pointer = ""
 			}
 			if (!isObject(target)) {
 				target = {}
 			}
-			for (_key in patch) if (
-				_undef !== (_val = patch[_key]) &&
-				hasOwn.call(patch, _key) &&
+			for (key in patch) if (
+				undef !== (val = patch[key]) &&
+				hasOwn.call(patch, key) &&
 				(
-					_undef == _val ?
-					_undef !== target[_key] && delete target[_key] :
-					target[_key] !== _val
+					undef == val ?
+					undef !== target[key] && delete target[key] :
+					target[key] !== val
 				)
 			) {
-				_nextPath = _path + "/" + _key.replace(/~/g, "~0").replace(/\//g, "~1")
-				_len = changed && isObject(target[_key]) && changed.length
-				if (_undef != _val) {
-					target[_key] = mergePatch(target[_key], _val, changed, _nextPath)
+				nextPointer = pointer + "/" + key.replace(/~/g, "~0").replace(/\//g, "~1")
+				len = changed && isObject(target[key]) && changed.length
+				if (undef != val) {
+					target[key] = mergePatch(target[key], val, changed, nextPointer)
 				}
-				if (_len === false || changed && _len != changed.length) {
-					changed.push(_nextPath)
+				if (len === false || changed && len != changed.length) {
+					changed.push(nextPointer)
 				}
 			}
 		} else {
@@ -98,7 +100,8 @@
 		return target
 	}
 
-	function clone(obj, temp, key) {
+	function clone(obj) {
+		var temp, key
 		if (obj && typeof obj == "object") {
 			// new Date().constructor() returns a string
 			temp = obj instanceof Date ? new Date(+obj) :
