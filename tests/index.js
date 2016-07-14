@@ -137,20 +137,36 @@ test("it clones objects", function(assert) {
 	var dateClone = util.clone(date)
 	, map = {a:3}
 	, mapClone = util.clone(map)
-	, re = /ab/g
-	, reClone = util.clone(re)
-	, arr = [1, "2", date, map, re]
+	, re1 = /ab/
+	, re1Clone = util.clone(re1)
+	, re2 = /ab/g
+	, re2Clone = util.clone(re2)
+	, re3 = /ab/i
+	, re3Clone = util.clone(re3)
+	, re4 = /ab/m
+	, re4Clone = util.clone(re4)
+	, re5 = /ab/gim
+	, re5Clone = util.clone(re5)
+	, arr = [1, "2", date, map, re1]
 	, arrClone = util.clone(arr)
 
 	assert.notStrictEqual(arr, arrClone)
 	assert.notStrictEqual(date, dateClone)
 	assert.notStrictEqual(map, mapClone)
-	assert.notStrictEqual(re, reClone)
+	assert.notStrictEqual(re1, re1Clone)
+	assert.notStrictEqual(re2, re2Clone)
+	assert.notStrictEqual(re3, re3Clone)
+	assert.notStrictEqual(re4, re4Clone)
+	assert.notStrictEqual(re5, re5Clone)
 
 	assert.deepEqual(arr, arrClone)
 	assert.deepEqual(date, dateClone)
 	assert.deepEqual(map, mapClone)
-	assert.deepEqual(re, reClone)
+	assert.deepEqual(re1, re1Clone)
+	assert.deepEqual(re2, re2Clone)
+	assert.deepEqual(re3, re3Clone)
+	assert.deepEqual(re4, re4Clone)
+	assert.deepEqual(re5, re5Clone)
 
 	delete Object.prototype.dummy
 }).
