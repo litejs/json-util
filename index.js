@@ -102,10 +102,9 @@
 		return target
 	}
 
-	function merge(_target) {
-		for (var key, source, target = _target, a = arguments, len = a.length, i = 1; i < len; ) {
-			source = a[i++]
-			for (key in source) if (hasOwn.call(source, key)) {
+	function merge(target) {
+		for (var key, source, a = arguments, i = 1, len = a.length; i < len; ) {
+			if (source = a[i++]) for (key in source) if (hasOwn.call(source, key)) {
 				target[key] = source[key]
 			}
 		}
