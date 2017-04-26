@@ -116,7 +116,7 @@
 		if (obj && typeof obj == "object") {
 			// new Date().constructor() returns a string
 			temp = obj instanceof Date ? new Date(+obj) :
-				obj instanceof RegExp ? new RegExp(obj.source, (obj.ignoreCase ? "i" : "") + (obj.global ? "g" : "") + (obj.multiline ? "m" : "")) :
+				// obj instanceof RegExp ? new RegExp(obj.source, (obj.ignoreCase ? "i" : "") + (obj.global ? "g" : "") + (obj.multiline ? "m" : "")) :
 				obj.constructor()
 			for (key in obj) if (hasOwn.call(obj, key)) {
 				temp[key] = clone(obj[key])
