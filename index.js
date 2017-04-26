@@ -97,6 +97,13 @@
 				}
 			}
 		} else {
+			if (changed && isObject(target)) {
+				val = {}
+				for (key in target) if (hasOwn.call(target, key)) {
+					val[key] = null
+				}
+				mergePatch(target, val, changed, pointer)
+			}
 			target = patch
 		}
 		return target
