@@ -15,40 +15,41 @@ var undef, a, b, c
 	, " ": 7
 	, "m~n": 8
 	}
+, clone1 = util.clone(obj)
 , tests =
-	[ {"a":"b"}         , {"a":"c"}                 , {"a":"c"}         , ["/a"]
-	, {"a":"b"}         , {"b":"c"}                 , {"a":"b","b":"c"} , ["/b"]
-	, {"a":"b"}         , {"a":null}                , {}                , ["/a"]
-	, {"a":"b"}         , {"a":undef}               , {"a":"b"}         , []
-	, {"a":"b"}         , {"b":undef}               , {"a":"b"}         , []
-	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}         , ["/a"]
-	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}         , ["/a"]
-	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}       , ["/a"]
-	, {"a":{"b":"c"}}   , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}   , ["/a/b", "/a"]
-	, {"a":{"b":"c"}}   , {"a":{"b":"c"}}           , {"a":{"b":"c"}}   , []
+	[ {"a":"b"}         , {"a":"c"}                 , {"a":"c"}         , ["/a"], {"/a":"b"}
+	, {"a":"b"}         , {"b":"c"}                 , {"a":"b","b":"c"} , ["/b"], {"/b":undef}
+	, {"a":"b"}         , {"a":null}                , {}                , ["/a"], {"/a":"b"}
+	, {"a":"b"}         , {"a":undef}               , {"a":"b"}         , [], {}
+	, {"a":"b"}         , {"b":undef}               , {"a":"b"}         , [], {}
+	, {"a":"b","b":"c"} , {"a":null}                , {"b":"c"}         , ["/a"], {"/a":"b"}
+	, {"a":["b"]}       , {"a":"c"}                 , {"a":"c"}         , ["/a"], {"/a": ["b"]}
+	, {"a":"c"}         , {"a":["b"]}               , {"a":["b"]}       , ["/a"], {"/a":"c"}
+	, {"a":{"b":"c"}}   , {"a":{"b":"d","c":null}}  , {"a":{"b":"d"}}   , ["/a/b", "/a"], {"/a/b":"c"}
+	, {"a":{"b":"c"}}   , {"a":{"b":"c"}}           , {"a":{"b":"c"}}   , [], {}
 
-	, {"a":{"b":0}}     , {"a":{"b":1}}             , {"a":{"b":1}}     , ["/a/b", "/a"]
-	, {"a":{"b":0}}     , {"a":{"b":null}}          , {"a":{}}          , ["/a/b", "/a"]
-	, {"a":{"b":1}}     , {"a":{"b":0}}             , {"a":{"b":0}}     , ["/a/b", "/a"]
-	, {"a":{"b":1}}     , {"a":{"b":null}}          , {"a":{}}          , ["/a/b", "/a"]
-	, {"a":{"b":null}}  , {"a":{"b":0}}             , {"a":{"b":0}}     , ["/a/b", "/a"]
-	, {"a":{"b":null}}  , {"a":{"b":1}}             , {"a":{"b":1}}     , ["/a/b", "/a"]
+	, {"a":{"b":0}}     , {"a":{"b":1}}             , {"a":{"b":1}}     , ["/a/b", "/a"], {"/a/b":0}
+	, {"a":{"b":0}}     , {"a":{"b":null}}          , {"a":{}}          , ["/a/b", "/a"], {"/a/b":0}
+	, {"a":{"b":1}}     , {"a":{"b":0}}             , {"a":{"b":0}}     , ["/a/b", "/a"], {"/a/b":1}
+	, {"a":{"b":1}}     , {"a":{"b":null}}          , {"a":{}}          , ["/a/b", "/a"], {"/a/b":1}
+	, {"a":{"b":null}}  , {"a":{"b":0}}             , {"a":{"b":0}}     , ["/a/b", "/a"], {"/a/b":null}
+	, {"a":{"b":null}}  , {"a":{"b":1}}             , {"a":{"b":1}}     , ["/a/b", "/a"], {"/a/b":null}
 
-	, {"a":[{"b":"c"}]} , {"a":[1]}                 , {"a":[1]}         , ["/a"]
-	, {"a":[{"b":"c"}]} , {"a":{"b":"c"}}           , {"a":{"b":"c"}}   , ["/a/b", "/a"]
-	, {"a":{"b":"c"}}   , {"a":[{"b":"c"}]}         , {"a":[{"b":"c"}]} , ["/a/b", "/a"]
-	, ["a","b"]         , ["c","d"]                 , ["c","d"]         , []
-	, {"a":"b"}         , ["c"]                     , ["c"]             , ["/a"]
-	, {"a":"foo"}       , null                      , null              , ["/a"]
-	, {"a":"foo"}       , "bar"                     , "bar"             , ["/a"]
-	, {"e":null}        , {"a":1}                   , {"e":null,"a":1}  , ["/a"]
-	, {"e":null}        , {"e":null}                , {}                , ["/e"]
-	, {"e":null}        , {"e":1}                   , {"e":1}           , ["/e"]
-	, {"e":0}           , {"e":1}                   , {"e":1}           , ["/e"]
-	, {"e":1}           , {"e":0}                   , {"e":0}           , ["/e"]
-	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}         , ["/a"]
-	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}   , ["/a/bb", "/a"]
-	, {}                , obj                       , obj               , ["/foo", "/", "/a~1b", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n", "/a/b/c", "/a/b", "/a"]
+	, {"a":[{"b":"c"}]} , {"a":[1]}                 , {"a":[1]}         , ["/a"], {"/a": [{"b":"c"}]}
+	, {"a":[{"b":"c"}]} , {"a":{"b":"c"}}           , {"a":{"b":"c"}}   , ["/a/b", "/a"], {"/a/b":undef,"/a":[{"b":"c"}]}
+	, {"a":{"b":"c"}}   , {"a":[{"b":"c"}]}         , {"a":[{"b":"c"}]} , ["/a/b", "/a"], {"/a/b":"c"}
+	, ["a","b"]         , ["c","d"]                 , ["c","d"]         , [], {}
+	, {"a":"b"}         , ["c"]                     , ["c"]             , ["/a"], {"/a":"b"}
+	, {"a":"foo"}       , null                      , null              , ["/a"], {"/a":"foo"}
+	, {"a":"foo"}       , "bar"                     , "bar"             , ["/a"], {"/a":"foo"}
+	, {"e":null}        , {"a":1}                   , {"e":null,"a":1}  , ["/a"], {"/a":undef}
+	, {"e":null}        , {"e":null}                , {}                , ["/e"], {"/e":null}
+	, {"e":null}        , {"e":1}                   , {"e":1}           , ["/e"], {"/e":null}
+	, {"e":0}           , {"e":1}                   , {"e":1}           , ["/e"], {"/e":0}
+	, {"e":1}           , {"e":0}                   , {"e":0}           , ["/e"], {"/e":1}
+	, [1,2]             , {"a":"b","c":null}        , {"a":"b"}         , ["/a"], {"/a":undef}
+	, {}                , {"a":{"bb":{"ccc":null}}} , {"a":{"bb":{}}}   , ["/a/bb", "/a"], {"/a/bb":undef,"/a":undef}
+	, {}                , clone1                    , clone1               , ["/foo", "/", "/a~1b", "/c%d", "/e^f", "/g|h", "/i\\j", "/k\"l", "/ ", "/m~0n"], {"/foo":undef, "/":undef, "/a~1b":undef, "/c%d":undef, "/e^f":undef, "/g|h":undef, "/i\\j":undef, "/k\"l":undef, "/ ":undef, "/m~0n":undef}
 	]
 
 
@@ -103,7 +104,7 @@ describe ("JSON.mergePatch").
 it("should apply merge patches")
 
 for (var x = 0; x < tests.length; )
-	addTest("mergePatch", tests[x++], tests[x++], tests[x++], tests[x++])
+	addTest("mergePatch", tests[x++], tests[x++], tests[x++], tests[x++], tests[x++])
 
 test.
 it ("should work with old Object.deepMerge tests").
@@ -193,11 +194,16 @@ isOptimized(util.isObject, ["a"]).
 done()
 
 
-function addTest(method, a, b, c, d) {
+function addTest(method, a, b, c, d, e) {
 	var changes = []
-	test = test.deepEqual(util[method](util.clone(a), b, changes), c)
+	, previous = {}
+	test = test.deepEqual(util[method](util.clone(a), b, changes, previous), c)
 	test = test.deepEqual(changes, d)
 	test = test.deepEqual(util[method](util.clone(a), b), c)
+
+	if (e) {
+		test = test.deepEqual(previous, e)
+	}
 }
 
 

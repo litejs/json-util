@@ -11,7 +11,7 @@
 
 
 
-!function(exports, Object) {
+!function(exports) {
 	var pointerCache = {}
 	, hasOwn = pointerCache.hasOwnProperty
 
@@ -69,8 +69,8 @@
 	 * @see https://tools.ietf.org/html/rfc7396
 	 */
 
-	function mergePatch(target, patch, changed, pointer) {
-		var undef, key, val, len, nextPointer
+	function mergePatch(target, patch, changed, previous, pointer) {
+		var undef, key, oldVal, val, len, nextPointer
 		if (isObject(patch)) {
 			if (!pointer) {
 				pointer = ""
@@ -79,21 +79,24 @@
 				target = {}
 			}
 			for (key in patch) if (
-				undef !== (val = patch[key]) &&
+				undef !== (oldVal = target[key], val = patch[key]) &&
 				hasOwn.call(patch, key) &&
 				(
 					undef == val ?
-					undef !== target[key] && delete target[key] :
+					undef !== oldVal && delete target[key] :
 					target[key] !== val
 				)
 			) {
 				nextPointer = pointer + "/" + key.replace(/~/g, "~0").replace(/\//g, "~1")
 				len = changed && isObject(target[key]) && changed.length
 				if (undef != val) {
-					target[key] = mergePatch(target[key], val, changed, nextPointer)
+					target[key] = mergePatch(target[key], val, changed, previous, nextPointer)
 				}
 				if (len === false || changed && len != changed.length) {
 					changed.push(nextPointer)
+					if (previous && !isObject(oldVal)) {
+						previous[nextPointer] = oldVal
+					}
 				}
 			}
 		} else {
@@ -102,7 +105,7 @@
 				for (key in target) if (hasOwn.call(target, key)) {
 					val[key] = null
 				}
-				mergePatch(target, val, changed, pointer)
+				mergePatch(target, val, changed, previous, pointer)
 			}
 			target = patch
 		}
@@ -134,10 +137,10 @@
 	}
 
 	function isObject(obj) {
-		return !!obj && obj.constructor == Object
+		return !!obj && obj.constructor === Object
 	}
 
 // `this` refers to the `window` in browser and to the `exports` in Node.js.
-}(this.JSON || this, Object)
+}(this.JSON || this)
 
 
