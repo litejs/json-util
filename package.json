@@ -1,6 +1,6 @@
 {
   "name": "json-util",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "stability": 3,
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "license": "MIT",
@@ -28,8 +28,8 @@
     "url": "https://github.com/litejs/json-util/issues"
   },
   "devDependencies": {
-    "buildman": "0.3.0",
-    "testman": "0.5.0"
+    "buildman": "0.4.1",
+    "testman": "0.5.1"
   },
   "buildman": {
     "dist/index-min.js": {
